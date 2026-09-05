@@ -41,6 +41,17 @@ const models = [
         color: 0x000000,
         rotation: { x: -1.5708, y: 0, z: 0 }
     },
+    {
+        id: 'engranajes',
+        name: 'Tren de Engranajes',
+        file: 'sistema-de-engranajes.glb',
+        format: 'GLB',
+        size: '1.2 MB',
+        description: 'Modelo 3D del Sistema de Engranajes. Diseñado en Fusion 360 con geometría detallada.',
+        category: 'vehiculo',
+        color: 0xffffff,
+        rotation: { x: -1.5708, y: 0, z: 0 }
+    },
     
     // ============================================
     // AGREGA MÁS MODELOS STL/AQUÍ
