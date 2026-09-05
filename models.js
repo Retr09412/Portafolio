@@ -46,7 +46,7 @@ const models = [
         name: 'Tren de Engranajes',
         file: 'sistema-de-engranajes.glb',
         format: 'GLB',
-        size: '1.2 MB',
+        size: '0.53 MB',
         description: 'Modelo 3D del Sistema de Engranajes. Diseñado en Fusion 360 con geometría detallada.',
         category: 'vehiculo',
         color: 0xffffff,
