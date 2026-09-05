@@ -1219,19 +1219,24 @@ html, body {
 }
 
 .model-card-name {
-    font-size: 0.55rem;
+    font-size: 0.60rem;
     font-weight: 500;
     color: var(--light);
     margin-bottom: 1px;
 }
 
+.model-card.active .model-card-name {
+    color: var(--dark);
+    font-weight: 600;
+}
+
 .model-card-format {
-    font-size: 0.45rem;
+    font-size: 0.55rem;
     color: var(--gray);
 }
 
 .model-card.active .model-card-format {
-    color: rgba(255, 255, 255, 0.7);
+    color: var(--dark);
 }
 
 .model-description {
