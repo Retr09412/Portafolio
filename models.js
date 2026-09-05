@@ -38,7 +38,7 @@ const models = [
         size: '3.4 MB',
         description: 'Modelo 3D del Batimóvil de Batman. Diseñado en Blender con geometría detallada.',
         category: 'vehiculo',
-        color: 0xffffff,
+        color: 808080,
         rotation: { x: -1.5708, y: 0, z: 0 }
     },
     
