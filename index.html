@@ -1,0 +1,573 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Carlos Nicola | Portafolio</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <!-- Intro Screen -->
+    <div id="intro-screen" class="intro-screen">
+        <div class="intro-content">
+            <span class="intro-typewriter" id="intro-typewriter"></span><span class="intro-cursor" id="intro-cursor">|</span>
+        </div>
+    </div>
+
+    <!-- Macintosh Frame -->
+    <div class="mac-wrapper">
+        <div class="mac-body">
+            <!-- Ventilation grilles top -->
+            <div class="mac-vents">
+                <span></span><span></span><span></span><span></span><span></span>
+                <span></span><span></span><span></span><span></span><span></span>
+            </div>
+            
+            <!-- Screen bezel -->
+            <div class="mac-bezel">
+                <div class="mac-screen">
+                    <!-- CRT Effects -->
+                    <div class="crt-overlay"></div>
+                    <div class="scanlines"></div>
+                    
+                    <!-- Navigation Bar -->
+                    <nav class="navbar" id="navbar">
+                        <div class="nav-container">
+                            <a class="nav-logo">
+                                <span class="logo-text">CN</span>
+                            </a>
+                            <div class="nav-sections" id="nav-sections">
+                                <span class="nav-item active" data-index="0">F1 INICIO</span>
+                                <span class="nav-item" data-index="1">F2 SOBRE MI</span>
+                                <span class="nav-item" data-index="2">F3 HABILIDADES</span>
+                                <span class="nav-item" data-index="3">F4 EXPERIENCIA</span>
+                                <span class="nav-item" data-index="4">F5 PROYECTOS</span>
+                                <span class="nav-item" data-index="5">F6 PORTAFOLIO 3D</span>
+                                <span class="nav-item" data-index="6">F7 CONTACTO</span>
+                            </div>
+                            <div class="nav-right">
+                                <div class="nav-section-indicator">
+                                    <span class="nav-current-index" id="nav-current-index">01</span>
+                                    <span class="nav-current-name" id="nav-current-name">INICIO</span>
+                                </div>
+                                <div class="nav-keys">
+                                    <span class="key-hint"><i class="fas fa-arrow-left"></i> <i class="fas fa-arrow-right"></i></span>
+                                </div>
+                            </div>
+                        </div>
+                    </nav>
+
+                    <!-- Sections Container -->
+                    <div class="sections-container" id="sections-container">
+                    
+                    <!-- Hero Section -->
+                    <section id="home" class="screen-section active" data-section="0">
+                        <div class="section-inner">
+                            <div class="hero-particles" id="particles"></div>
+                            <div class="hero-content">
+                                <div class="hero-text">
+                                    <p class="hero-greeting">Hola, soy</p>
+                                    <h1 class="hero-name">Carlos Nicola</h1>
+                                    <h2 class="hero-title">
+                                        <span class="title-highlight">Diseñador de Productos</span>
+                                        <span class="title-separator">Y</span>
+                                        <span class="title-highlight">Desarrollador Full-Stack</span>
+                                    </h2>
+                                    <p class="hero-description">
+                                        Fusiono diseño y tecnología para crear experiencias digitales innovadoras. 
+                                        Transformo ideas en productos funcionales y atractivos.
+                                    </p>
+                                    <div class="hero-buttons">
+                                        <button class="btn btn-primary" onclick="goToSection(4)">Ver Proyectos</button>
+                                        <button class="btn btn-secondary" onclick="goToSection(6)">Contactar</button>
+                                    </div>
+                                    <div class="hero-social">
+                                        <a href="https://www.linkedin.com/in/carlos-nicola" target="_blank" class="social-link">
+                                            <i class="fab fa-linkedin-in"></i>
+                                        </a>
+                                        <a href="mailto:carlosnicola39@gmail.com" class="social-link">
+                                            <i class="fas fa-envelope"></i>
+                                        </a>
+                                        <a href="tel:0939903869" class="social-link">
+                                            <i class="fas fa-phone"></i>
+                                        </a>
+                                    </div>
+                                </div>
+                                <div class="hero-visual">
+                                    <div class="hero-shape">
+                                        <div class="shape-inner">
+                                            <img src="src/perfil.jpg" alt="Carlos Nicola" class="hero-photo">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="section-nav-hint">
+                                <span>Pulsa <kbd>&rarr;</kbd> para avanzar</span>
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- About Section -->
+                    <section id="about" class="screen-section" data-section="1">
+                        <div class="section-inner">
+                            <div class="section-header">
+                                <h2 class="section-title">Sobre Mí</h2>
+                                <div class="section-line"></div>
+                            </div>
+                            <div class="about-content">
+                                <div class="about-image">
+                                    <div class="image-frame">
+                                        <div class="image-placeholder">
+                                            <i class="fas fa-user"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="about-text">
+                                    <h3>Diseñador de Productos y Ingeniero TI</h3>
+                                    <p>
+                                        Soy un profesional multidisciplinario con pasión por el diseño de productos 
+                                        y el desarrollo de software. Actualmente cursando Ingeniería en Tecnologías 
+                                        de la Información en UNEMI y Diseño de Productos en ESPOL.
+                                    </p>
+                                    <p>
+                                        Mi enfoque combina la creatividad del diseño con la precisión de la ingeniería, 
+                                        permitiéndome crear soluciones completas que van desde el concepto inicial hasta 
+                                        la implementación técnica.
+                                    </p>
+                                    <div class="about-stats">
+                                        <div class="stat-item">
+                                            <span class="stat-number">2+</span>
+                                            <span class="stat-label">Carreras</span>
+                                        </div>
+                                        <div class="stat-item">
+                                            <span class="stat-number">5+</span>
+                                            <span class="stat-label">Certificaciones</span>
+                                        </div>
+                                        <div class="stat-item">
+                                            <span class="stat-number">10+</span>
+                                            <span class="stat-label">Proyectos</span>
+                                        </div>
+                                    </div>
+                                    <a href="src/Carlos_Nicola_CV.pdf" class="btn btn-primary" download="">Descargar CV</a>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- Skills Section -->
+                    <section id="skills" class="screen-section" data-section="2">
+                        <div class="section-inner">
+                            <div class="section-header">
+                                <h2 class="section-title">Habilidades</h2>
+                                <div class="section-line"></div>
+                            </div>
+                            <div class="skills-content">
+                                <div class="skill-category">
+                                    <div class="skill-icon">
+                                        <i class="fas fa-palette"></i>
+                                    </div>
+                                    <h3>Diseño UX/UI</h3>
+                                    <ul class="skill-list">
+                                        <li><i class="fab fa-figma"></i> Figma</li>
+                                        <li><i class="fas fa-project-diagram"></i> Wireframing</li>
+                                        <li><i class="fas fa-hand-pointer"></i> Ergonomía</li>
+                                        <li><i class="fas fa-users"></i> Investigación de Usuarios</li>
+                                    </ul>
+                                </div>
+                                <div class="skill-category">
+                                    <div class="skill-icon">
+                                        <i class="fas fa-code"></i>
+                                    </div>
+                                    <h3>Desarrollo</h3>
+                                    <ul class="skill-list">
+                                        <li><i class="fab fa-js-square"></i> JavaScript</li>
+                                        <li><i class="fas fa-code"></i> TypeScript</li>
+                                        <li><i class="fab fa-react"></i> React</li>
+                                        <li><i class="fab fa-html5"></i> HTML5</li>
+                                        <li><i class="fab fa-css3-alt"></i> CSS3</li>
+                                        <li><i class="fas fa-database"></i> SQL</li>
+                                    </ul>
+                                </div>
+                                <div class="skill-category">
+                                    <div class="skill-icon">
+                                        <i class="fas fa-cube"></i>
+                                    </div>
+                                    <h3>3D y Hardware</h3>
+                                    <ul class="skill-list">
+                                        <li><i class="fas fa-cubes"></i> Blender</li>
+                                        <li><i class="fas fa-drafting-compass"></i> Autodesk Fusion</li>
+                                        <li><i class="fas fa-building"></i> SketchUp</li>
+                                        <li><i class="fas fa-microchip"></i> Arduino</li>
+                                        <li><i class="fas fa-print"></i> Cura</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- Experience Section -->
+                    <section id="experience" class="screen-section" data-section="3">
+                        <div class="section-inner">
+                            <div class="section-header">
+                                <h2 class="section-title">Experiencia</h2>
+                                <div class="section-line"></div>
+                            </div>
+                            <div class="experience-content">
+                                <div class="experience-card">
+                                    <div class="card-header">
+                                        <div class="card-icon">
+                                            <i class="fas fa-anchor"></i>
+                                        </div>
+                                        <div class="card-title">
+                                            <h3>Bluecontor</h3>
+                                            <span class="card-subtitle">Diseñador UX/UI Freelance</span>
+                                        </div>
+                                        <span class="card-date">2026</span>
+                                    </div>
+                                    <div class="card-content">
+                                        <ul>
+                                            <li>Lideré el rediseño y la optimización de la experiencia de usuario en las pantallas de ingreso de datos para una startup del sector marítimo.</li>
+                                            <li>Investigué y diseñé flujos de trabajo enfocados en la usabilidad para perfiles operativos, proponiendo integraciones estratégicas.</li>
+                                        </ul>
+                                    </div>
+                                </div>
+
+                                <div class="education-section">
+                                    <h3 class="subsection-title">Educación</h3>
+                                    <div class="education-grid">
+                                        <div class="education-card">
+                                            <div class="edu-icon">
+                                                <i class="fas fa-laptop-code"></i>
+                                            </div>
+                                            <div class="edu-info">
+                                                <h4>Ingeniería TI</h4>
+                                                <span class="edu-institution">UNEMI</span>
+                                                <span class="edu-date">2025 – Presente</span>
+                                            </div>
+                                        </div>
+                                        <div class="education-card">
+                                            <div class="edu-icon">
+                                                <i class="fas fa-paint-brush"></i>
+                                            </div>
+                                            <div class="edu-info">
+                                                <h4>Diseño de Productos</h4>
+                                                <span class="edu-institution">ESPOL</span>
+                                                <span class="edu-date">2023 – Presente</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="certifications-section">
+                                    <h3 class="subsection-title">Certificaciones</h3>
+                                    <div class="cert-grid">
+                                        <div class="cert-card">
+                                            <i class="fas fa-certificate"></i>
+                                            <h4>Programación Web</h4>
+                                            <span class="cert-org">SECAP - 2026</span>
+                                        </div>
+                                        <div class="cert-card">
+                                            <i class="fas fa-certificate"></i>
+                                            <h4>Spacehack</h4>
+                                            <span class="cert-org">Arizona State University - 2026</span>
+                                        </div>
+                                        <div class="cert-card">
+                                            <i class="fas fa-certificate"></i>
+                                            <h4>Gen AI: Unlock Foundational Concepts</h4>
+                                            <span class="cert-org">Google - 2025</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- Projects Section -->
+                    <section id="projects" class="screen-section" data-section="4">
+                        <div class="section-inner">
+                            <div class="section-header">
+                                <h2 class="section-title">Proyectos</h2>
+                                <div class="section-line"></div>
+                            </div>
+                            <div class="projects-filter">
+                                <button class="filter-btn active" data-filter="all">Todos</button>
+                                <button class="filter-btn" data-filter="design">Diseño</button>
+                                <button class="filter-btn" data-filter="dev">Desarrollo</button>
+                                <button class="filter-btn" data-filter="3d">3D</button>
+                            </div>
+                            <div class="projects-grid">
+                                <div class="project-card" data-category="dev">
+                                    <div class="project-image">
+                                        <div class="project-placeholder">
+                                            <i class="fas fa-code"></i>
+                                        </div>
+                                    </div>
+                                    <div class="project-info">
+                                        <h3>Desarrollo Web Front-end</h3>
+                                        <p>Interfaces web dinámicas con React y TypeScript.</p>
+                                        <div class="project-tags">
+                                            <span>React</span>
+                                            <span>TypeScript</span>
+                                            <span>3D</span>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="project-card" data-category="design">
+                                    <div class="project-image">
+                                        <div class="project-placeholder">
+                                            <i class="fas fa-anchor"></i>
+                                        </div>
+                                    </div>
+                                    <div class="project-info">
+                                        <h3>Bluecontor UX/UI</h3>
+                                        <p>Rediseño de experiencia de usuario para startup marítima.</p>
+                                        <div class="project-tags">
+                                            <span>Figma</span>
+                                            <span>Investigación UX</span>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="project-card" data-category="3d">
+                                    <div class="project-image">
+                                        <div class="project-placeholder">
+                                            <i class="fas fa-cube"></i>
+                                        </div>
+                                    </div>
+                                    <div class="project-info">
+                                        <h3>Diseño 3D - Spacehack</h3>
+                                        <p>Análisis impulsado por IA con enfoque UX/UI.</p>
+                                        <div class="project-tags">
+                                            <span>Blender</span>
+                                            <span>Fusion</span>
+                                            <span>Arduino</span>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="project-card" data-category="dev design">
+                                    <div class="project-image">
+                                        <div class="project-placeholder">
+                                            <i class="fas fa-mobile-alt"></i>
+                                        </div>
+                                    </div>
+                                    <div class="project-info">
+                                        <h3>App E-commerce</h3>
+                                        <p>Aplicación móvil de comercio electrónico.</p>
+                                        <div class="project-tags">
+                                            <span>React Native</span>
+                                            <span>Node.js</span>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="project-card" data-category="3d design">
+                                    <div class="project-image">
+                                        <div class="project-placeholder">
+                                            <i class="fas fa-drafting-compass"></i>
+                                        </div>
+                                    </div>
+                                    <div class="project-info">
+                                        <h3>Producto Industrial</h3>
+                                        <p>Diseño y modelado 3D de producto industrial.</p>
+                                        <div class="project-tags">
+                                            <span>Fusion 360</span>
+                                            <span>3D Print</span>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="project-card" data-category="dev">
+                                    <div class="project-image">
+                                        <div class="project-placeholder">
+                                            <i class="fas fa-chart-line"></i>
+                                        </div>
+                                    </div>
+                                    <div class="project-info">
+                                        <h3>Dashboard Analytics</h3>
+                                        <p>Panel de control interactivo con visualización de datos.</p>
+                                        <div class="project-tags">
+                                            <span>React</span>
+                                            <span>D3.js</span>
+                                            <span>SQL</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- 3D Portfolio Section -->
+                    <section id="3d-portfolio" class="screen-section" data-section="5">
+                        <div class="section-inner">
+                            <div class="section-header">
+                                <h2 class="section-title">Portafolio 3D</h2>
+                                <div class="section-line"></div>
+                                <p class="section-subtitle">Explora mis diseños 3D de forma interactiva.</p>
+                            </div>
+                            <div class="viewer-3d-container">
+                                <div class="viewer-3d-wrapper">
+                                    <canvas id="canvas-3d"></canvas>
+                                    <div class="viewer-controls">
+                                        <button class="viewer-btn" id="reset-view" title="Resetear vista">
+                                            <i class="fas fa-sync-alt"></i>
+                                        </button>
+                                        <button class="viewer-btn" id="toggle-wireframe" title="Modo wireframe">
+                                            <i class="fas fa-border-all"></i>
+                                        </button>
+                                        <button class="viewer-btn" id="toggle-auto-rotate" title="Auto-rotar">
+                                            <i class="fas fa-redo"></i>
+                                        </button>
+                                        <button class="viewer-btn" id="toggle-color" title="Cambiar color">
+                                            <i class="fas fa-palette"></i>
+                                        </button>
+                                    </div>
+                                    <div class="viewer-info">
+                                        <span id="model-name">Cargando modelo...</span>
+                                    </div>
+                                    <div class="viewer-loading" id="viewer-loading">
+                                        <i class="fas fa-spinner fa-spin"></i>
+                                        <span>Cargando...</span>
+                                    </div>
+                                </div>
+                                <div class="model-selector">
+                                    <h3>Mis Modelos</h3>
+                                    <div class="model-grid" id="model-grid"></div>
+                                    <div class="model-description">
+                                        <h4 id="model-title">Selecciona un modelo</h4>
+                                        <p id="model-description-text">Haz clic en un modelo para visualizarlo en 3D.</p>
+                                        <div class="model-details" id="model-details">
+                                            <span><i class="fas fa-ruler-combined"></i> <span id="detail-format">-</span></span>
+                                            <span><i class="fas fa-weight-hanging"></i> <span id="detail-size">-</span></span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- Contact Section -->
+                    <section id="contact" class="screen-section" data-section="6">
+                        <div class="section-inner">
+                            <div class="section-header">
+                                <h2 class="section-title">Contacto</h2>
+                                <div class="section-line"></div>
+                            </div>
+                            <div class="contact-content">
+                                <div class="contact-info">
+                                    <h3>¿Trabajamos juntos?</h3>
+                                    <p>Estoy disponible para proyectos freelance, colaboraciones y oportunidades laborales.</p>
+                                    <div class="contact-details">
+                                        <div class="contact-item">
+                                            <i class="fas fa-envelope"></i>
+                                            <div>
+                                                <span class="contact-label">Email</span>
+                                                <a href="mailto:carlosnicola39@gmail.com">carlosnicola39@gmail.com</a>
+                                            </div>
+                                        </div>
+                                        <div class="contact-item">
+                                            <i class="fas fa-phone"></i>
+                                            <div>
+                                                <span class="contact-label">Teléfono</span>
+                                                <a href="tel:0939903869">0939903869</a>
+                                            </div>
+                                        </div>
+                                        <div class="contact-item">
+                                            <i class="fab fa-linkedin-in"></i>
+                                            <div>
+                                                <span class="contact-label">LinkedIn</span>
+                                                <a href="https://www.linkedin.com/in/carlos-nicola" target="_blank">linkedin.com/in/carlos-nicola</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <form class="contact-form" id="contact-form">
+                                    <div class="form-group">
+                                        <input type="text" id="name" name="name" required>
+                                        <label for="name">Nombre</label>
+                                    </div>
+                                    <div class="form-group">
+                                        <input type="email" id="email" name="email" required>
+                                        <label for="email">Email</label>
+                                    </div>
+                                    <div class="form-group">
+                                        <input type="text" id="subject" name="subject" required>
+                                        <label for="subject">Asunto</label>
+                                    </div>
+                                    <div class="form-group">
+                                        <textarea id="message" name="message" rows="4" required></textarea>
+                                        <label for="message">Mensaje</label>
+                                    </div>
+                                    <button type="submit" class="btn btn-primary btn-submit">
+                                        <span>Enviar Mensaje</span>
+                                        <i class="fas fa-paper-plane"></i>
+                                    </button>
+                                </form>
+                            </div>
+                        </div>
+                    </section>
+
+                </div>
+
+                <!-- Terminal Status Bar -->
+                <div class="status-bar">
+                    <span class="status-left">
+                        <span class="status-dot"></span>
+                        SYSTEM ONLINE
+                    </span>
+                    <span class="status-center" id="status-section">SECCION: INICIO</span>
+                    <span class="status-right">
+                        <span id="status-time"></span>
+                        <span class="status-keys">← → NAV</span>
+                    </span>
+                </div>
+            </div>
+            
+            <!-- Bottom chin with Macintosh logo -->
+            <div class="mac-chin">
+                <div class="mac-logo-badge">
+                    <span class="rainbow"></span>
+                    <span class="mac-text">Macintosh</span>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Stand -->
+        <div class="mac-stand">
+            <div class="stand-neck"></div>
+            <div class="stand-base"></div>
+        </div>
+    </div>
+
+    <!-- Mobile Nav Buttons -->
+    <div class="mobile-nav" id="mobile-nav">
+        <button class="mobile-nav-btn mobile-nav-prev" id="mobile-prev" onclick="goToSection(currentSection - 1)">
+            <i class="fas fa-chevron-left"></i>
+        </button>
+        <button class="mobile-nav-btn mobile-nav-next" id="mobile-next" onclick="goToSection(currentSection + 1)">
+            <i class="fas fa-chevron-right"></i>
+        </button>
+    </div>
+
+    <!-- Keyboard hint overlay -->
+    <div class="keyboard-overlay" id="keyboard-overlay">
+        <div class="keyboard-visual">
+            <div class="key key-left"><i class="fas fa-arrow-left"></i></div>
+            <div class="key key-right"><i class="fas fa-arrow-right"></i></div>
+        </div>
+    </div>
+
+    <!-- Three.js -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="https://unpkg.com/three@0.128.0/examples/js/controls/OrbitControls.js"></script>
+    <script src="https://unpkg.com/three@0.128.0/examples/js/loaders/GLTFLoader.js"></script>
+    <script src="https://unpkg.com/three@0.128.0/examples/js/loaders/STLLoader.js"></script>
+    <script src="models.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>
