@@ -33,9 +33,9 @@ const models = [
     {
         id: 'batimovil',
         name: 'Batimóvil',
-        file: 'batimovil.stl',
-        format: 'STL',
-        size: '3.4 MB',
+        file: 'batimovil.glb',
+        format: 'GLB',
+        size: '0.73 MB',
         description: 'Modelo 3D del Batimóvil de Batman. Diseñado en Blender con geometría detallada.',
         category: 'vehiculo',
         color: 0x000000,
