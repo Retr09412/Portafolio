@@ -267,10 +267,12 @@ document.querySelectorAll('.project-card').forEach(function(card) {
     card.addEventListener('click', function() {
         openProjectModal(card);
     });
-    card.style.cursor = 'pointer';
 });
 
 if (modalClose) modalClose.addEventListener('click', closeProjectModal);
+
+const modalDotClose = document.querySelector('.modal-dot-close');
+if (modalDotClose) modalDotClose.addEventListener('click', closeProjectModal);
 
 projectModal.addEventListener('click', function(e) {
     if (e.target === projectModal) closeProjectModal();
