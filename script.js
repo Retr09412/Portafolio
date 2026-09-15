@@ -207,6 +207,82 @@ document.querySelectorAll('.filter-btn').forEach(function(btn) {
 });
 
 // ============================================
+// Project Modal
+// ============================================
+const projectModal = document.getElementById('project-modal');
+const modalClose = document.getElementById('modal-close');
+const modalTitlebarName = document.getElementById('modal-titlebar-name');
+const modalProjectName = document.getElementById('modal-project-name');
+const modalProjectDesc = document.getElementById('modal-project-desc');
+const modalProjectTags = document.getElementById('modal-project-tags');
+const modalBtnLive = document.getElementById('modal-btn-live');
+const modalBtnBehance = document.getElementById('modal-btn-behance');
+const modalImage = document.getElementById('modal-image');
+
+function openProjectModal(card) {
+    const name = card.querySelector('h3').textContent;
+    const desc = card.getAttribute('data-long-desc') || card.querySelector('p').textContent;
+    const icon = card.getAttribute('data-icon') || 'fa-folder';
+    const liveUrl = card.getAttribute('data-live');
+    const behanceUrl = card.getAttribute('data-behance');
+    const tags = card.querySelectorAll('.project-tags span');
+
+    modalTitlebarName.textContent = name;
+    modalProjectName.textContent = name;
+    modalProjectDesc.textContent = desc;
+
+    modalImage.innerHTML = '<div class="modal-placeholder"><i class="fas ' + icon + '"></i></div>';
+
+    modalProjectTags.innerHTML = '';
+    tags.forEach(function(tag) {
+        const span = document.createElement('span');
+        span.textContent = tag.textContent;
+        modalProjectTags.appendChild(span);
+    });
+
+    if (liveUrl) {
+        modalBtnLive.href = liveUrl;
+        modalBtnLive.classList.remove('hidden');
+    } else {
+        modalBtnLive.classList.add('hidden');
+    }
+
+    if (behanceUrl) {
+        modalBtnBehance.href = behanceUrl;
+        modalBtnBehance.classList.remove('hidden');
+    } else {
+        modalBtnBehance.classList.add('hidden');
+    }
+
+    projectModal.classList.add('active');
+    document.body.style.overflow = 'hidden';
+}
+
+function closeProjectModal() {
+    projectModal.classList.remove('active');
+    document.body.style.overflow = '';
+}
+
+document.querySelectorAll('.project-card').forEach(function(card) {
+    card.addEventListener('click', function() {
+        openProjectModal(card);
+    });
+    card.style.cursor = 'pointer';
+});
+
+if (modalClose) modalClose.addEventListener('click', closeProjectModal);
+
+projectModal.addEventListener('click', function(e) {
+    if (e.target === projectModal) closeProjectModal();
+});
+
+document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape' && projectModal.classList.contains('active')) {
+        closeProjectModal();
+    }
+});
+
+// ============================================
 // Three.js 3D Viewer
 // ============================================
 let scene, camera, renderer, controls, currentMesh, currentModel;
