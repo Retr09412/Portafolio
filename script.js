@@ -19,38 +19,30 @@ function goToSection(index) {
     const navCurrentName = document.getElementById('nav-current-name');
     const goingRight = index > currentSection;
     
-    // Exit current section
     sections[currentSection].classList.remove('active');
     sections[currentSection].classList.add(goingRight ? 'exit-left' : 'exit-right');
     navItems[currentSection].classList.remove('active');
     
-    // Prepare new section
     const newSection = sections[index];
     newSection.classList.remove('exit-left', 'exit-right');
     newSection.classList.add(goingRight ? 'enter-right' : 'enter-left');
     
-    // Force reflow
     void newSection.offsetWidth;
     
-    // Remove enter class and add active
     newSection.classList.remove('enter-right', 'enter-left');
     newSection.classList.add('active');
     
-    // Update state
     currentSection = index;
     navItems[currentSection].classList.add('active');
-    statusSection.textContent = 'SECCION: ' + sectionNames[currentSection];
+    if (statusSection) statusSection.textContent = 'SECCION: ' + sectionNames[currentSection];
     
-    // Update mobile nav indicator
     if (navCurrentIndex) navCurrentIndex.textContent = String(currentSection + 1).padStart(2, '0');
     if (navCurrentName) navCurrentName.textContent = sectionNames[currentSection];
     
-    // Update mobile nav buttons
     updateMobileNavButtons();
     
-    // Disable 3D controls on mobile when in 3D section
     if (controls) {
-        var isMobile = window.innerWidth <= 1000;
+        const isMobile = window.innerWidth <= 1000;
         if (currentSection === 5 && isMobile) {
             controls.enableRotate = false;
             controls.enableZoom = false;
@@ -62,10 +54,8 @@ function goToSection(index) {
         }
     }
     
-    // Update URL hash
     history.replaceState(null, null, '#' + sectionIds[currentSection]);
     
-    // Cleanup after animation
     setTimeout(function() {
         sections.forEach(function(section, i) {
             if (i !== currentSection) {
@@ -80,14 +70,10 @@ function goToSection(index) {
 // Mobile Nav Buttons State
 // ============================================
 function updateMobileNavButtons() {
-    var prevBtn = document.getElementById('mobile-prev');
-    var nextBtn = document.getElementById('mobile-next');
-    if (prevBtn) {
-        prevBtn.classList.toggle('disabled', currentSection === 0);
-    }
-    if (nextBtn) {
-        nextBtn.classList.toggle('disabled', currentSection === totalSections - 1);
-    }
+    const prevBtn = document.getElementById('mobile-prev');
+    const nextBtn = document.getElementById('mobile-next');
+    if (prevBtn) prevBtn.classList.toggle('disabled', currentSection === 0);
+    if (nextBtn) nextBtn.classList.toggle('disabled', currentSection === totalSections - 1);
 }
 
 // ============================================
@@ -149,20 +135,34 @@ function handleSwipe() {
 // ============================================
 document.querySelectorAll('.nav-item').forEach(function(item) {
     item.addEventListener('click', function() {
-        var index = parseInt(this.getAttribute('data-index'));
+        const index = parseInt(this.getAttribute('data-index'));
         goToSection(index);
     });
 });
 
 // ============================================
+// Button Click Handlers (replaces inline onclick)
+// ============================================
+document.querySelectorAll('[data-goto]').forEach(function(btn) {
+    btn.addEventListener('click', function() {
+        goToSection(parseInt(this.getAttribute('data-goto')));
+    });
+});
+
+const mobilePrev = document.getElementById('mobile-prev');
+const mobileNext = document.getElementById('mobile-next');
+if (mobilePrev) mobilePrev.addEventListener('click', function() { goToSection(currentSection - 1); });
+if (mobileNext) mobileNext.addEventListener('click', function() { goToSection(currentSection + 1); });
+
+// ============================================
 // Time Display
 // ============================================
 function updateTime() {
-    var now = new Date();
-    var hours = String(now.getHours()).padStart(2, '0');
-    var minutes = String(now.getMinutes()).padStart(2, '0');
-    var seconds = String(now.getSeconds()).padStart(2, '0');
-    var el = document.getElementById('status-time');
+    const now = new Date();
+    const hours = String(now.getHours()).padStart(2, '0');
+    const minutes = String(now.getMinutes()).padStart(2, '0');
+    const seconds = String(now.getSeconds()).padStart(2, '0');
+    const el = document.getElementById('status-time');
     if (el) el.textContent = hours + ':' + minutes + ':' + seconds;
 }
 
@@ -173,11 +173,11 @@ updateTime();
 // Particles Background
 // ============================================
 function createParticles() {
-    var container = document.getElementById('particles');
+    const container = document.getElementById('particles');
     if (!container) return;
     
-    for (var i = 0; i < 30; i++) {
-        var particle = document.createElement('div');
+    for (let i = 0; i < 30; i++) {
+        const particle = document.createElement('div');
         particle.style.cssText = 'position:absolute;width:' + (Math.random() * 4 + 1) + 'px;height:' + (Math.random() * 4 + 1) + 'px;background:rgba(16,185,129,' + (Math.random() * 0.4 + 0.1) + ');border-radius:50%;left:' + (Math.random() * 100) + '%;top:' + (Math.random() * 100) + '%;animation:particleFloat ' + (Math.random() * 15 + 15) + 's linear infinite;animation-delay:' + (Math.random() * 5) + 's;';
         container.appendChild(particle);
     }
@@ -193,9 +193,11 @@ document.querySelectorAll('.filter-btn').forEach(function(btn) {
         });
         btn.classList.add('active');
         
-        var filter = btn.getAttribute('data-filter');
+        const filter = btn.getAttribute('data-filter');
         document.querySelectorAll('.project-card').forEach(function(card) {
-            if (filter === 'all' || card.getAttribute('data-category').indexOf(filter) !== -1) {
+            const category = card.getAttribute('data-category');
+            if (!category) return;
+            if (filter === 'all' || category.indexOf(filter) !== -1) {
                 card.classList.remove('hidden');
             } else {
                 card.classList.add('hidden');
@@ -207,16 +209,17 @@ document.querySelectorAll('.filter-btn').forEach(function(btn) {
 // ============================================
 // Three.js 3D Viewer
 // ============================================
-var scene, camera, renderer, controls, currentMesh, currentModel;
-var autoRotate = true;
-var isWireframe = false;
-var currentColor = 0xffb000;
+let scene, camera, renderer, controls, currentMesh, currentModel;
+let autoRotate = true;
+let isWireframe = false;
+let currentColor = 0xffb000;
+let animationId = null;
 
 function initThreeJS() {
-    var canvas = document.getElementById('canvas-3d');
+    const canvas = document.getElementById('canvas-3d');
     if (!canvas) return;
     
-    var container = canvas.parentElement;
+    const container = canvas.parentElement;
 
     scene = new THREE.Scene();
     scene.background = new THREE.Color(0x0a0e14);
@@ -234,40 +237,39 @@ function initThreeJS() {
     controls.autoRotate = true;
     controls.autoRotateSpeed = 2;
 
-    // Disable manual rotation on mobile/tablet
-    var isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+    const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
     if (isMobile) {
         controls.enableRotate = false;
         controls.enableZoom = false;
         controls.enablePan = false;
     }
 
-    var ambientLight = new THREE.AmbientLight(0xffffff, 0.5);
+    const ambientLight = new THREE.AmbientLight(0xffffff, 0.5);
     scene.add(ambientLight);
 
-    var directionalLight = new THREE.DirectionalLight(0xffffff, 1);
+    const directionalLight = new THREE.DirectionalLight(0xffffff, 1);
     directionalLight.position.set(5, 5, 5);
     scene.add(directionalLight);
 
-    var pointLight = new THREE.PointLight(0xffffff, 1);
+    const pointLight = new THREE.PointLight(0xffffff, 1);
     pointLight.position.set(-5, -5, 5);
     scene.add(pointLight);
 
-    var gridHelper = new THREE.GridHelper(10, 20, 0x888888, 0x1e2430);
+    const gridHelper = new THREE.GridHelper(10, 20, 0x888888, 0x1e2430);
     gridHelper.position.y = -2;
     scene.add(gridHelper);
 
     window.addEventListener('resize', function() {
-        var c = document.getElementById('canvas-3d');
+        const c = document.getElementById('canvas-3d');
         if (!c) return;
-        var cont = c.parentElement;
+        const cont = c.parentElement;
         camera.aspect = cont.clientWidth / cont.clientHeight;
         camera.updateProjectionMatrix();
         renderer.setSize(cont.clientWidth, cont.clientHeight);
     });
 
     function animate() {
-        requestAnimationFrame(animate);
+        animationId = requestAnimationFrame(animate);
         if (controls) controls.update();
         if (renderer && scene && camera) renderer.render(scene, camera);
     }
@@ -285,8 +287,11 @@ function createPrimitiveModel(primitive) {
 }
 
 function loadModel(modelData) {
-    var loading = document.getElementById('viewer-loading');
+    const loading = document.getElementById('viewer-loading');
     if (loading) loading.classList.add('active');
+    
+    const errorEl = document.getElementById('viewer-error');
+    if (errorEl) errorEl.style.display = 'none';
     
     if (currentMesh) {
         scene.remove(currentMesh);
@@ -297,15 +302,21 @@ function loadModel(modelData) {
     currentModel = modelData;
     currentColor = modelData.color || 0xffb000;
     
-    document.getElementById('model-name').textContent = modelData.name;
-    document.getElementById('model-title').textContent = modelData.name;
-    document.getElementById('model-description-text').textContent = modelData.description;
-    document.getElementById('detail-format').textContent = modelData.format;
-    document.getElementById('detail-size').textContent = modelData.size;
+    const nameEl = document.getElementById('model-name');
+    const titleEl = document.getElementById('model-title');
+    const descEl = document.getElementById('model-description-text');
+    const formatEl = document.getElementById('detail-format');
+    const sizeEl = document.getElementById('detail-size');
+    
+    if (nameEl) nameEl.textContent = modelData.name;
+    if (titleEl) titleEl.textContent = modelData.name;
+    if (descEl) descEl.textContent = modelData.description;
+    if (formatEl) formatEl.textContent = modelData.format;
+    if (sizeEl) sizeEl.textContent = modelData.size;
 
     if (modelData.primitive) {
-        var geometry = createPrimitiveModel(modelData.primitive);
-        var material = new THREE.MeshPhongMaterial({ color: modelData.color, shininess: 100, wireframe: isWireframe });
+        const geometry = createPrimitiveModel(modelData.primitive);
+        const material = new THREE.MeshPhongMaterial({ color: modelData.color, shininess: 100, wireframe: isWireframe });
         currentMesh = new THREE.Mesh(geometry, material);
         if (modelData.rotation) {
             currentMesh.rotation.set(modelData.rotation.x, modelData.rotation.y, modelData.rotation.z);
@@ -313,23 +324,23 @@ function loadModel(modelData) {
         scene.add(currentMesh);
         if (loading) loading.classList.remove('active');
     } else if (modelData.file) {
-        var fileName = modelData.file.toLowerCase();
+        const fileName = modelData.file.toLowerCase();
         
         if (fileName.endsWith('.glb') || fileName.endsWith('.gltf')) {
-            var loader = new THREE.GLTFLoader();
+            const loader = new THREE.GLTFLoader();
             loader.load('models/' + modelData.file, function(gltf) {
                 currentMesh = gltf.scene;
-                var box = new THREE.Box3().setFromObject(currentMesh);
-                var center = box.getCenter(new THREE.Vector3());
-                var size = box.getSize(new THREE.Vector3());
-                var maxDim = Math.max(size.x, size.y, size.z);
-                var scale = 4 / maxDim;
+                const box = new THREE.Box3().setFromObject(currentMesh);
+                const center = box.getCenter(new THREE.Vector3());
+                const size = box.getSize(new THREE.Vector3());
+                const maxDim = Math.max(size.x, size.y, size.z);
+                const scale = 4 / maxDim;
                 currentMesh.scale.multiplyScalar(scale);
                 currentMesh.position.sub(center.multiplyScalar(scale));
                 if (modelData.rotation) currentMesh.rotation.set(modelData.rotation.x, modelData.rotation.y, modelData.rotation.z);
                 currentMesh.updateMatrixWorld(true);
-                var newBox = new THREE.Box3().setFromObject(currentMesh);
-                var newCenter = newBox.getCenter(new THREE.Vector3());
+                const newBox = new THREE.Box3().setFromObject(currentMesh);
+                const newCenter = newBox.getCenter(new THREE.Vector3());
                 currentMesh.position.x -= newCenter.x;
                 currentMesh.position.z -= newCenter.z;
                 currentMesh.position.y -= (newBox.min.y + 2);
@@ -344,24 +355,28 @@ function loadModel(modelData) {
             }, undefined, function(error) {
                 console.error('Error loading GLTF:', error);
                 if (loading) loading.classList.remove('active');
+                if (errorEl) {
+                    errorEl.style.display = 'flex';
+                    errorEl.querySelector('span').textContent = 'Error al cargar el modelo';
+                }
             });
         } else if (fileName.endsWith('.stl')) {
-            var stlLoader = new THREE.STLLoader();
+            const stlLoader = new THREE.STLLoader();
             stlLoader.load('models/' + modelData.file, function(geometry) {
-                var material = new THREE.MeshPhongMaterial({ color: modelData.color || 0xffb000, shininess: 100, wireframe: isWireframe });
+                const material = new THREE.MeshPhongMaterial({ color: modelData.color || 0xffb000, shininess: 100, wireframe: isWireframe });
                 currentMesh = new THREE.Mesh(geometry, material);
                 geometry.computeBoundingBox();
-                var box = geometry.boundingBox;
-                var center = box.getCenter(new THREE.Vector3());
-                var size = box.getSize(new THREE.Vector3());
-                var maxDim = Math.max(size.x, size.y, size.z);
-                var scale = 4 / maxDim;
+                const box = geometry.boundingBox;
+                const center = box.getCenter(new THREE.Vector3());
+                const size = box.getSize(new THREE.Vector3());
+                const maxDim = Math.max(size.x, size.y, size.z);
+                const scale = 4 / maxDim;
                 currentMesh.scale.multiplyScalar(scale);
                 currentMesh.position.sub(center.multiplyScalar(scale));
                 if (modelData.rotation) currentMesh.rotation.set(modelData.rotation.x, modelData.rotation.y, modelData.rotation.z);
                 currentMesh.updateMatrixWorld(true);
-                var newBox = new THREE.Box3().setFromObject(currentMesh);
-                var newCenter = newBox.getCenter(new THREE.Vector3());
+                const newBox = new THREE.Box3().setFromObject(currentMesh);
+                const newCenter = newBox.getCenter(new THREE.Vector3());
                 currentMesh.position.x -= newCenter.x;
                 currentMesh.position.z -= newCenter.z;
                 currentMesh.position.y -= (newBox.min.y + 2);
@@ -370,23 +385,27 @@ function loadModel(modelData) {
             }, undefined, function(error) {
                 console.error('Error loading STL:', error);
                 if (loading) loading.classList.remove('active');
+                if (errorEl) {
+                    errorEl.style.display = 'flex';
+                    errorEl.querySelector('span').textContent = 'Error al cargar el modelo';
+                }
             });
         }
     }
 }
 
 function loadModelGrid() {
-    var grid = document.getElementById('model-grid');
+    const grid = document.getElementById('model-grid');
     if (!grid || typeof models === 'undefined') return;
     grid.innerHTML = '';
     
     models.forEach(function(model, index) {
-        var card = document.createElement('div');
+        const card = document.createElement('div');
         card.className = 'model-card';
         card.setAttribute('data-model-id', model.id);
         card.setAttribute('data-category', model.category);
         
-        var iconClass = 'fa-cube';
+        let iconClass = 'fa-cube';
         if (model.primitive === 'sphere') iconClass = 'fa-circle';
         else if (model.primitive === 'torus') iconClass = 'fa-ring';
         else if (model.primitive === 'icosa') iconClass = 'fa-gem';
@@ -410,13 +429,13 @@ function loadModelGrid() {
 }
 
 // Viewer controls
-var resetBtn = document.getElementById('reset-view');
+const resetBtn = document.getElementById('reset-view');
 if (resetBtn) resetBtn.addEventListener('click', function() {
-    camera.position.set(0, 0, 5);
-    controls.reset();
+    if (camera) camera.position.set(0, 0, 5);
+    if (controls && controls.reset) controls.reset();
 });
 
-var wireBtn = document.getElementById('toggle-wireframe');
+const wireBtn = document.getElementById('toggle-wireframe');
 if (wireBtn) wireBtn.addEventListener('click', function() {
     isWireframe = !isWireframe;
     this.classList.toggle('active');
@@ -427,17 +446,17 @@ if (wireBtn) wireBtn.addEventListener('click', function() {
     }
 });
 
-var rotateBtn = document.getElementById('toggle-auto-rotate');
+const rotateBtn = document.getElementById('toggle-auto-rotate');
 if (rotateBtn) rotateBtn.addEventListener('click', function() {
     autoRotate = !autoRotate;
-    controls.autoRotate = autoRotate;
+    if (controls) controls.autoRotate = autoRotate;
     this.classList.toggle('active');
 });
 
-var colorBtn = document.getElementById('toggle-color');
+const colorBtn = document.getElementById('toggle-color');
 if (colorBtn) colorBtn.addEventListener('click', function() {
-    var colors = [0xffb000, 0xffffff, 0x10B981, 0x06B6D4, 0x34D399, 0xA7F3D0, 0x059669];
-    var currentIndex = colors.indexOf(currentColor);
+    const colors = [0xffb000, 0xffffff, 0x10B981, 0x06B6D4, 0x34D399, 0xA7F3D0, 0x059669];
+    const currentIndex = colors.indexOf(currentColor);
     currentColor = colors[(currentIndex + 1) % colors.length];
     if (currentMesh) {
         currentMesh.traverse(function(child) {
@@ -449,18 +468,18 @@ if (colorBtn) colorBtn.addEventListener('click', function() {
 // ============================================
 // Contact Form
 // ============================================
-var contactForm = document.getElementById('contact-form');
+const contactForm = document.getElementById('contact-form');
 if (contactForm) {
     contactForm.addEventListener('submit', function(e) {
         e.preventDefault();
-        var formData = new FormData(this);
-        var data = Object.fromEntries(formData);
+        const formData = new FormData(this);
+        const data = Object.fromEntries(formData);
         if (!data.name || !data.email || !data.subject || !data.message) {
             alert('Por favor, completa todos los campos.');
             return;
         }
-        var btn = this.querySelector('.btn-submit');
-        var originalText = btn.innerHTML;
+        const btn = this.querySelector('.btn-submit');
+        const originalText = btn.innerHTML;
         btn.innerHTML = '<span>Enviando...</span><i class="fas fa-spinner fa-spin"></i>';
         btn.disabled = true;
         setTimeout(function() {
@@ -478,16 +497,15 @@ if (contactForm) {
 // Intro Animation
 // ============================================
 function runIntroAnimation() {
-    var introScreen = document.getElementById('intro-screen');
-    var introTypewriter = document.getElementById('intro-typewriter');
-    var introCursor = document.getElementById('intro-cursor');
+    const introScreen = document.getElementById('intro-screen');
+    const introTypewriter = document.getElementById('intro-typewriter');
+    const introCursor = document.getElementById('intro-cursor');
     if (!introScreen || !introTypewriter) return;
     
-    var text = '> Hola, soy Carlos';
-    var index = 0;
-    var speed = 60;
+    const text = '> Hola, soy Carlos';
+    let index = 0;
+    const speed = 60;
     
-    // Hide cursor initially
     if (introCursor) introCursor.style.visibility = 'hidden';
     
     function typeChar() {
@@ -495,7 +513,7 @@ function runIntroAnimation() {
             introTypewriter.textContent += text.charAt(index);
             index++;
             
-            var nextSpeed = speed + Math.random() * 40 - 20;
+            let nextSpeed = speed + Math.random() * 40 - 20;
             
             if (text.charAt(index - 1) === ',' || text.charAt(index - 1) === '>') {
                 nextSpeed = 200;
@@ -503,7 +521,6 @@ function runIntroAnimation() {
             
             setTimeout(typeChar, nextSpeed);
         } else {
-            // Typing done - show cursor blinking, then fade
             if (introCursor) introCursor.style.visibility = 'visible';
             
             setTimeout(function() {
@@ -532,6 +549,6 @@ document.addEventListener('DOMContentLoaded', function() {
     runIntroAnimation();
     updateMobileNavButtons();
     
-    var autoBtn = document.getElementById('toggle-auto-rotate');
+    const autoBtn = document.getElementById('toggle-auto-rotate');
     if (autoBtn) autoBtn.classList.add('active');
 });

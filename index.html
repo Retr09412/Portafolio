@@ -4,6 +4,12 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Carlos Nicola | Portafolio</title>
+    <meta name="description" content="Portafolio de Carlos Nicola - Diseñador de Productos y Desarrollador Full-Stack. Fusiono diseño y tecnología para crear experiencias digitales innovadoras.">
+    <meta name="theme-color" content="#0f0d08">
+    <meta property="og:title" content="Carlos Nicola | Portafolio">
+    <meta property="og:description" content="Diseñador de Productos y Desarrollador Full-Stack. Fusiono diseño y tecnología para crear experiencias digitales innovadoras.">
+    <meta property="og:type" content="website">
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='4' fill='%230f0d08'/%3E%3Ctext x='50%25' y='55%25' dominant-baseline='middle' text-anchor='middle' font-family='monospace' font-size='18' font-weight='bold' fill='%23ffb000'%3ECN%3C/text%3E%3C/svg%3E">
     <link rel="stylesheet" href="styles.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -11,6 +17,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 <body>
+    <a href="#home" class="skip-link">Ir al contenido principal</a>
     <!-- Intro Screen -->
     <div id="intro-screen" class="intro-screen">
         <div class="intro-content">
@@ -37,9 +44,9 @@
                     <!-- Navigation Bar -->
                     <nav class="navbar" id="navbar">
                         <div class="nav-container">
-                            <a class="nav-logo">
+                            <span class="nav-logo" role="banner">
                                 <span class="logo-text">CN</span>
-                            </a>
+                            </span>
                             <div class="nav-sections" id="nav-sections">
                                 <span class="nav-item active" data-index="0">F1 INICIO</span>
                                 <span class="nav-item" data-index="1">F2 SOBRE MI</span>
@@ -82,11 +89,11 @@
                                         Transformo ideas en productos funcionales y atractivos.
                                     </p>
                                     <div class="hero-buttons">
-                                        <button class="btn btn-primary" onclick="goToSection(4)">Ver Proyectos</button>
-                                        <button class="btn btn-secondary" onclick="goToSection(6)">Contactar</button>
+                                        <button class="btn btn-primary" data-goto="4">Ver Proyectos</button>
+                                        <button class="btn btn-secondary" data-goto="6">Contactar</button>
                                     </div>
                                     <div class="hero-social">
-                                        <a href="https://www.linkedin.com/in/carlos-nicola" target="_blank" class="social-link">
+                                        <a href="https://www.linkedin.com/in/carlos-nicola" target="_blank" rel="noopener noreferrer" class="social-link">
                                             <i class="fab fa-linkedin-in"></i>
                                         </a>
                                         <a href="mailto:carlosnicola39@gmail.com" class="social-link">
@@ -414,16 +421,16 @@
                                 <div class="viewer-3d-wrapper">
                                     <canvas id="canvas-3d"></canvas>
                                     <div class="viewer-controls">
-                                        <button class="viewer-btn" id="reset-view" title="Resetear vista">
+                                        <button class="viewer-btn" id="reset-view" title="Resetear vista" aria-label="Resetear vista">
                                             <i class="fas fa-sync-alt"></i>
                                         </button>
-                                        <button class="viewer-btn" id="toggle-wireframe" title="Modo wireframe">
+                                        <button class="viewer-btn" id="toggle-wireframe" title="Modo wireframe" aria-label="Modo wireframe">
                                             <i class="fas fa-border-all"></i>
                                         </button>
-                                        <button class="viewer-btn" id="toggle-auto-rotate" title="Auto-rotar">
+                                        <button class="viewer-btn" id="toggle-auto-rotate" title="Auto-rotar" aria-label="Auto-rotar">
                                             <i class="fas fa-redo"></i>
                                         </button>
-                                        <button class="viewer-btn" id="toggle-color" title="Cambiar color">
+                                        <button class="viewer-btn" id="toggle-color" title="Cambiar color" aria-label="Cambiar color">
                                             <i class="fas fa-palette"></i>
                                         </button>
                                     </div>
@@ -433,6 +440,10 @@
                                     <div class="viewer-loading" id="viewer-loading">
                                         <i class="fas fa-spinner fa-spin"></i>
                                         <span>Cargando...</span>
+                                    </div>
+                                    <div class="viewer-error" id="viewer-error" style="display:none;position:absolute;inset:0;align-items:center;justify-content:center;background:rgba(10,14,20,0.9);color:var(--primary);flex-direction:column;gap:8px;">
+                                        <i class="fas fa-exclamation-triangle" style="font-size:1.5rem;"></i>
+                                        <span style="font-size:0.7rem;">Error al cargar el modelo</span>
                                     </div>
                                 </div>
                                 <div class="model-selector">
@@ -481,7 +492,7 @@
                                             <i class="fab fa-linkedin-in"></i>
                                             <div>
                                                 <span class="contact-label">LinkedIn</span>
-                                                <a href="https://www.linkedin.com/in/carlos-nicola" target="_blank">linkedin.com/in/carlos-nicola</a>
+                                                <a href="https://www.linkedin.com/in/carlos-nicola" target="_blank" rel="noopener noreferrer">linkedin.com/in/carlos-nicola</a>
                                             </div>
                                         </div>
                                     </div>
@@ -546,10 +557,10 @@
 
     <!-- Mobile Nav Buttons -->
     <div class="mobile-nav" id="mobile-nav">
-        <button class="mobile-nav-btn mobile-nav-prev" id="mobile-prev" onclick="goToSection(currentSection - 1)">
+        <button class="mobile-nav-btn mobile-nav-prev" id="mobile-prev">
             <i class="fas fa-chevron-left"></i>
         </button>
-        <button class="mobile-nav-btn mobile-nav-next" id="mobile-next" onclick="goToSection(currentSection + 1)">
+        <button class="mobile-nav-btn mobile-nav-next" id="mobile-next">
             <i class="fas fa-chevron-right"></i>
         </button>
     </div>
@@ -561,6 +572,12 @@
             <div class="key key-right"><i class="fas fa-arrow-right"></i></div>
         </div>
     </div>
+
+    <noscript>
+        <p style="color:#ffb000;background:#0f0d08;padding:20px;text-align:center;font-family:monospace;">
+            Este portafolio requiere JavaScript habilitado para funcionar correctamente.
+        </p>
+    </noscript>
 
     <!-- Three.js -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
