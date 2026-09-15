@@ -38,7 +38,7 @@ const models = [
         size: '0.73 MB',
         description: 'Modelo 3D del Batimóvil de Batman. Diseñado en Blender con geometría detallada.',
         category: 'vehiculo',
-        color: 0x000000,
+        color: 0xffb000,
         rotation: { x: -1.5708, y: 0, z: 0 }
     },
     {
@@ -49,7 +49,7 @@ const models = [
         size: '0.53 MB',
         description: 'Modelo 3D del Sistema de Engranajes. Diseñado en Fusion 360 con geometría detallada.',
         category: 'vehiculo',
-        color: 0xffffff,
+        color: 0xffb000,
         rotation: { x: -1.5708, y: 0, z: 0 }
     },
     

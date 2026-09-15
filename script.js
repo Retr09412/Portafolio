@@ -210,7 +210,7 @@ document.querySelectorAll('.filter-btn').forEach(function(btn) {
 var scene, camera, renderer, controls, currentMesh, currentModel;
 var autoRotate = true;
 var isWireframe = false;
-var currentColor = 0xffffff;
+var currentColor = 0xffb000;
 
 function initThreeJS() {
     var canvas = document.getElementById('canvas-3d');
@@ -295,7 +295,7 @@ function loadModel(modelData) {
     }
 
     currentModel = modelData;
-    currentColor = modelData.color || 0xffffff;
+    currentColor = modelData.color || 0xffb000;
     
     document.getElementById('model-name').textContent = modelData.name;
     document.getElementById('model-title').textContent = modelData.name;
@@ -335,7 +335,7 @@ function loadModel(modelData) {
                 currentMesh.position.y -= (newBox.min.y + 2);
                 currentMesh.traverse(function(child) {
                     if (child.isMesh) {
-                        child.material.color.setHex(modelData.color || 0xffffff);
+                        child.material.color.setHex(modelData.color || 0xffb000);
                         child.material.wireframe = isWireframe;
                     }
                 });
@@ -348,7 +348,7 @@ function loadModel(modelData) {
         } else if (fileName.endsWith('.stl')) {
             var stlLoader = new THREE.STLLoader();
             stlLoader.load('models/' + modelData.file, function(geometry) {
-                var material = new THREE.MeshPhongMaterial({ color: modelData.color || 0xffffff, shininess: 100, wireframe: isWireframe });
+                var material = new THREE.MeshPhongMaterial({ color: modelData.color || 0xffb000, shininess: 100, wireframe: isWireframe });
                 currentMesh = new THREE.Mesh(geometry, material);
                 geometry.computeBoundingBox();
                 var box = geometry.boundingBox;
@@ -436,7 +436,7 @@ if (rotateBtn) rotateBtn.addEventListener('click', function() {
 
 var colorBtn = document.getElementById('toggle-color');
 if (colorBtn) colorBtn.addEventListener('click', function() {
-    var colors = [0xffffff, 0x10B981, 0x06B6D4, 0x34D399, 0xA7F3D0, 0x059669];
+    var colors = [0xffb000, 0xffffff, 0x10B981, 0x06B6D4, 0x34D399, 0xA7F3D0, 0x059669];
     var currentIndex = colors.indexOf(currentColor);
     currentColor = colors[(currentIndex + 1) % colors.length];
     if (currentMesh) {
