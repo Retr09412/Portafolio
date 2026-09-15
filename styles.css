@@ -1407,6 +1407,7 @@ html, body {
     color: var(--gray);
     font-size: 0.6rem;
     margin-bottom: 2px;
+    text-align: start;
 }
 
 .contact-item a {
@@ -2332,6 +2333,7 @@ html, body {
     .contact-label {
         font-size: 0.5rem;
         margin-bottom: 1px;
+        text-align: start;
     }
 
     .contact-item a {
