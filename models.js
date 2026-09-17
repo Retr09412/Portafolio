@@ -36,7 +36,7 @@ const models = [
         file: 'batimovil.glb',
         format: 'GLB',
         size: '0.73 MB',
-        description: 'Modelo 3D del Batimóvil de Batman. Diseñado en Blender con geometría detallada.',
+        description: 'Modelo 3D del Batimóvil de Batman. Diseñado en Fusion 360 con geometría detallada.',
         category: 'vehiculo',
         color: 0xffb000,
         rotation: { x: -1.5708, y: 0, z: 0 }
@@ -48,9 +48,31 @@ const models = [
         format: 'GLB',
         size: '0.53 MB',
         description: 'Modelo 3D del Sistema de Engranajes. Diseñado en Fusion 360 con geometría detallada.',
+        category: 'mecanismo',
+        color: 0xffb000,
+        rotation: { x: 0, y: 0, z: 0 }
+    },
+    {
+        id: 'submarino',
+        name: 'Submarino',
+        file: 'submarino.glb',
+        format: 'GLB',
+        size: '1.40 MB',
+        description: 'Modelo 3D de un Submarino animado. Diseñado en blender.',
         category: 'vehiculo',
         color: 0xffb000,
-        rotation: { x: -1.5708, y: 0, z: 0 }
+        rotation: { x: 0, y: 0, z: 0 }
+    },
+    {
+        id: 'batman',
+        name: 'Batman',
+        file: 'batman.glb',
+        format: 'GLB',
+        size: '1.04 MB',
+        description: 'Modelo 3D de Batman. Diseñado en blender.',
+        category: 'personaje',
+        color: 0xffb000,
+        rotation: { x: -1.5708, y: -1.5708*2, z: -1.5708 }
     },
     
     // ============================================
@@ -68,13 +90,3 @@ const models = [
     //     color: 0x6366f1
     // },
 ];
-
-// Categorías disponibles
-const categories = {
-    all: { name: 'Todos', icon: 'fa-th' },
-    producto: { name: 'Productos', icon: 'fa-box' },
-    arquitectura: { name: 'Arquitectura', icon: 'fa-building' },
-    organico: { name: 'Orgánico', icon: 'fa-leaf' },
-    abstracto: { name: 'Abstracto', icon: 'fa-shapes' },
-    vehiculo: { name: 'Vehículos', icon: 'fa-car' }
-};

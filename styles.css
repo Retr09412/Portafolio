@@ -8,7 +8,7 @@
     --primary-light: #ffc847;
     --secondary: #ff9500;
     --accent: #ffe0a0;
-    --accent-cool: #5ce0d8;
+    --accent-cool: #77e2db;
 
     /* Dark tones - warmer */
     --dark: #0f0d08;
@@ -628,7 +628,7 @@ html, body {
     display: flex;
     align-items: center;
     justify-content: center;
-    color: var(--primary);
+    color: var(--accent-cool);
     text-decoration: none;
     transition: var(--transition);
     border: 1px solid var(--dark-tertiary);
@@ -636,10 +636,10 @@ html, body {
 }
 
 .social-link:hover {
-    background: var(--primary);
+    background: var(--accent-cool);
     color: var(--dark);
     transform: translateY(-2px);
-    box-shadow: 0 4px 15px rgba(255, 176, 0, 0.4);
+    box-shadow: 0 4px 15px rgba(92, 224, 216, 0.3);
 }
 
 .hero-visual {
@@ -843,7 +843,7 @@ html, body {
 
 .skill-list li i {
     width: 14px;
-    color: var(--primary-light);
+    color: var(--accent-cool);
     font-size: 0.75rem;
     text-align: center;
 }
@@ -1000,7 +1000,7 @@ html, body {
 
 .cert-grid {
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: repeat(4, 1fr);
     gap: 10px;
 }
 
@@ -1018,6 +1018,16 @@ html, body {
     transform: translateY(-2px);
 }
 
+.cert-link {
+    text-decoration: none;
+    display: block;
+}
+
+.cert-link:hover {
+    border-color: var(--accent-cool);
+    box-shadow: 0 4px 15px rgba(92, 224, 216, 0.2);
+}
+
 .cert-card i {
     font-size: 1.1rem;
     color: var(--accent);
@@ -1028,11 +1038,17 @@ html, body {
     font-size: 0.7rem;
     color: var(--light);
     margin-bottom: 3px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
 }
 
 .cert-org {
     color: var(--gray);
     font-size: 0.6rem;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
 }
 
 /* ============================================
@@ -1088,6 +1104,8 @@ html, body {
     overflow: hidden;
     border: 1px solid var(--dark-tertiary);
     transition: var(--transition);
+    display: flex;
+    flex-direction: column;
 }
 
 .project-card:hover {
@@ -1106,6 +1124,7 @@ html, body {
     overflow: hidden;
 }
 
+
 .project-placeholder {
     width: 100%;
     height: 100%;
@@ -1119,6 +1138,9 @@ html, body {
 
 .project-info {
     padding: 10px;
+    display: flex;
+    flex-direction: column;
+    flex: 1;
 }
 
 .project-info h3 {
@@ -1138,12 +1160,13 @@ html, body {
     display: flex;
     flex-wrap: wrap;
     gap: 4px;
+    margin-top: auto;
 }
 
 .project-tags span {
     padding: 2px 7px;
-    background: rgba(255, 176, 0, 0.1);
-    color: var(--primary-light);
+    background: rgba(92, 224, 216, 0.08);
+    color: var(--accent-cool);
     border-radius: 10px;
     font-size: 0.55rem;
 }
@@ -1435,7 +1458,7 @@ html, body {
 }
 
 .contact-item a:hover {
-    color: var(--primary);
+    color: var(--primary-light);
     text-decoration: underline;
 }
 
@@ -2543,58 +2566,46 @@ input, textarea, .form-group input, .form-group textarea {
     position: relative;
 }
 
-.modal-image {
-    width: 100%;
-    height: 180px;
-    background: var(--dark);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    overflow: hidden;
-    border-bottom: 1px solid var(--dark-tertiary);
-}
-
-.modal-placeholder {
-    font-size: 3rem;
-    color: var(--dark-tertiary);
-}
-
 .modal-info {
-    padding: 20px;
+    padding: 24px 28px;
+    display: flex;
+    flex-direction: column;
+    min-height: 280px;
 }
 
 .modal-project-name {
     font-family: 'Space Grotesk', sans-serif;
-    font-size: 1.1rem;
+    font-size: 1.2rem;
     font-weight: 700;
     background: var(--gradient);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
-    margin-bottom: 10px;
+    margin-bottom: 14px;
 }
 
 .modal-project-desc {
     font-size: 0.8rem;
     color: var(--gray-light);
-    line-height: 1.6;
-    margin-bottom: 14px;
+    line-height: 1.7;
+    margin-bottom: 18px;
 }
 
 .modal-project-tags {
     display: flex;
     flex-wrap: wrap;
     gap: 6px;
-    margin-bottom: 18px;
+    margin-top: auto;
+    margin-bottom: 20px;
 }
 
 .modal-project-tags span {
     padding: 3px 10px;
-    background: rgba(255, 176, 0, 0.1);
-    border: 1px solid rgba(255, 176, 0, 0.25);
+    background: rgba(92, 224, 216, 0.08);
+    border: 1px solid rgba(92, 224, 216, 0.2);
     border-radius: 12px;
     font-size: 0.65rem;
-    color: var(--primary);
+    color: var(--accent-cool);
     font-weight: 500;
 }
 
@@ -2602,6 +2613,7 @@ input, textarea, .form-group input, .form-group textarea {
     display: flex;
     gap: 10px;
     flex-wrap: wrap;
+    padding-top: 4px;
 }
 
 .modal-btn {
@@ -2678,20 +2690,17 @@ input, textarea, .form-group input, .form-group textarea {
         max-width: none;
     }
 
-    .modal-image {
-        height: 140px;
-    }
-
     .modal-info {
-        padding: 14px;
+        padding: 18px 20px;
+        min-height: 240px;
     }
 
     .modal-project-name {
-        font-size: 0.95rem;
+        font-size: 1rem;
     }
 
     .modal-project-desc {
-        font-size: 0.7rem;
+        font-size: 0.72rem;
     }
 
     .modal-actions {

@@ -217,12 +217,10 @@ const modalProjectDesc = document.getElementById('modal-project-desc');
 const modalProjectTags = document.getElementById('modal-project-tags');
 const modalBtnLive = document.getElementById('modal-btn-live');
 const modalBtnBehance = document.getElementById('modal-btn-behance');
-const modalImage = document.getElementById('modal-image');
 
 function openProjectModal(card) {
     const name = card.querySelector('h3').textContent;
     const desc = card.getAttribute('data-long-desc') || card.querySelector('p').textContent;
-    const icon = card.getAttribute('data-icon') || 'fa-folder';
     const liveUrl = card.getAttribute('data-live');
     const behanceUrl = card.getAttribute('data-behance');
     const tags = card.querySelectorAll('.project-tags span');
@@ -230,8 +228,6 @@ function openProjectModal(card) {
     modalTitlebarName.textContent = name;
     modalProjectName.textContent = name;
     modalProjectDesc.textContent = desc;
-
-    modalImage.innerHTML = '<div class="modal-placeholder"><i class="fas ' + icon + '"></i></div>';
 
     modalProjectTags.innerHTML = '';
     tags.forEach(function(tag) {
@@ -308,6 +304,10 @@ function initThreeJS() {
     renderer = new THREE.WebGLRenderer({ canvas: canvas, antialias: true });
     renderer.setSize(container.clientWidth, container.clientHeight);
     renderer.setPixelRatio(window.devicePixelRatio);
+    renderer.toneMapping = THREE.ACESFilmicToneMapping;
+    renderer.toneMappingExposure = 1.2;
+    renderer.shadowMap.enabled = true;
+    renderer.shadowMap.type = THREE.PCFSoftShadowMap;
 
     controls = new THREE.OrbitControls(camera, renderer.domElement);
     controls.enableDamping = true;
@@ -322,20 +322,52 @@ function initThreeJS() {
         controls.enablePan = false;
     }
 
-    const ambientLight = new THREE.AmbientLight(0xffffff, 0.5);
+    const ambientLight = new THREE.AmbientLight(0xffffff, 0.3);
     scene.add(ambientLight);
 
-    const directionalLight = new THREE.DirectionalLight(0xffffff, 1);
-    directionalLight.position.set(5, 5, 5);
+    const hemisphereLight = new THREE.HemisphereLight(0xffd89c, 0x1a1610, 0.6);
+    scene.add(hemisphereLight);
+
+    const directionalLight = new THREE.DirectionalLight(0xfff5e0, 1.2);
+    directionalLight.position.set(5, 8, 5);
+    directionalLight.castShadow = true;
+    directionalLight.shadow.mapSize.width = 1024;
+    directionalLight.shadow.mapSize.height = 1024;
+    directionalLight.shadow.camera.near = 0.5;
+    directionalLight.shadow.camera.far = 50;
     scene.add(directionalLight);
 
-    const pointLight = new THREE.PointLight(0xffffff, 1);
-    pointLight.position.set(-5, -5, 5);
-    scene.add(pointLight);
+    const fillLight = new THREE.DirectionalLight(0xc8e0ff, 0.4);
+    fillLight.position.set(-5, 3, -5);
+    scene.add(fillLight);
+
+    const rimLight = new THREE.PointLight(0xffb000, 0.5);
+    rimLight.position.set(0, -3, 5);
+    scene.add(rimLight);
+
+    const pmremGenerator = new THREE.PMREMGenerator(renderer);
+    const envScene = new THREE.Scene();
+    envScene.background = new THREE.Color(0x1a1610);
+    const envLight1 = new THREE.DirectionalLight(0xfff5e0, 0.5);
+    envLight1.position.set(1, 1, 1);
+    envScene.add(envLight1);
+    const envLight2 = new THREE.DirectionalLight(0xc8e0ff, 0.3);
+    envLight2.position.set(-1, 0.5, -1);
+    envScene.add(envLight2);
+    scene.environment = pmremGenerator.fromScene(envScene).texture;
+    pmremGenerator.dispose();
 
     const gridHelper = new THREE.GridHelper(10, 20, 0x888888, 0x1e2430);
     gridHelper.position.y = -2;
     scene.add(gridHelper);
+
+    const groundGeometry = new THREE.PlaneGeometry(20, 20);
+    const groundMaterial = new THREE.ShadowMaterial({ opacity: 0.3 });
+    const ground = new THREE.Mesh(groundGeometry, groundMaterial);
+    ground.rotation.x = -Math.PI / 2;
+    ground.position.y = -2;
+    ground.receiveShadow = true;
+    scene.add(ground);
 
     window.addEventListener('resize', function() {
         const c = document.getElementById('canvas-3d');
@@ -394,8 +426,15 @@ function loadModel(modelData) {
 
     if (modelData.primitive) {
         const geometry = createPrimitiveModel(modelData.primitive);
-        const material = new THREE.MeshPhongMaterial({ color: modelData.color, shininess: 100, wireframe: isWireframe });
+        const material = new THREE.MeshStandardMaterial({ 
+            color: modelData.color, 
+            roughness: 0.4,
+            metalness: 0.3,
+            wireframe: isWireframe 
+        });
         currentMesh = new THREE.Mesh(geometry, material);
+        currentMesh.castShadow = true;
+        currentMesh.receiveShadow = true;
         if (modelData.rotation) {
             currentMesh.rotation.set(modelData.rotation.x, modelData.rotation.y, modelData.rotation.z);
         }
@@ -424,8 +463,17 @@ function loadModel(modelData) {
                 currentMesh.position.y -= (newBox.min.y + 2);
                 currentMesh.traverse(function(child) {
                     if (child.isMesh) {
-                        child.material.color.setHex(modelData.color || 0xffb000);
                         child.material.wireframe = isWireframe;
+                        child.material.roughness = 0.4;
+                        child.material.metalness = 0.3;
+                        child.material.envMapIntensity = 0.5;
+                        child.castShadow = true;
+                        child.receiveShadow = true;
+                        if (child.material.color) {
+                            const originalColor = child.material.color.clone();
+                            const amberColor = new THREE.Color(modelData.color || 0xffb000);
+                            child.material.color.copy(originalColor).lerp(amberColor, 0.3);
+                        }
                     }
                 });
                 scene.add(currentMesh);
@@ -441,8 +489,15 @@ function loadModel(modelData) {
         } else if (fileName.endsWith('.stl')) {
             const stlLoader = new THREE.STLLoader();
             stlLoader.load('models/' + modelData.file, function(geometry) {
-                const material = new THREE.MeshPhongMaterial({ color: modelData.color || 0xffb000, shininess: 100, wireframe: isWireframe });
+                const material = new THREE.MeshStandardMaterial({ 
+                    color: modelData.color || 0xffb000, 
+                    roughness: 0.4,
+                    metalness: 0.3,
+                    wireframe: isWireframe 
+                });
                 currentMesh = new THREE.Mesh(geometry, material);
+                currentMesh.castShadow = true;
+                currentMesh.receiveShadow = true;
                 geometry.computeBoundingBox();
                 const box = geometry.boundingBox;
                 const center = box.getCenter(new THREE.Vector3());
