@@ -483,14 +483,7 @@ function loadModelGrid() {
         card.setAttribute('data-model-id', model.id);
         card.setAttribute('data-category', model.category);
         
-        let iconClass = 'fa-cube';
-        if (model.primitive === 'sphere') iconClass = 'fa-circle';
-        else if (model.primitive === 'torus') iconClass = 'fa-ring';
-        else if (model.primitive === 'icosa') iconClass = 'fa-gem';
-        else if (model.format === 'GLB' || model.format === 'GLTF') iconClass = 'fa-file-3d';
-        else if (model.format === 'STL') iconClass = 'fa-shapes';
-        
-        card.innerHTML = '<div class="model-card-icon"><i class="fas ' + iconClass + '"></i></div><div class="model-card-name">' + model.name + '</div><div class="model-card-format">' + model.format + '</div>';
+        card.innerHTML = '<div class="model-card-name">' + model.name + '</div><div class="model-card-format">' + model.format + '</div>';
         
         card.addEventListener('click', function() {
             document.querySelectorAll('.model-card').forEach(function(c) { c.classList.remove('active'); });
