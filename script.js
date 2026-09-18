@@ -63,7 +63,7 @@ function goToSection(index) {
             }
         });
         isTransitioning = false;
-    }, 700);
+    }, goingRight ? 700 : 450);
 }
 
 // ============================================
@@ -320,6 +320,7 @@ function initThreeJS() {
         controls.enableRotate = false;
         controls.enableZoom = false;
         controls.enablePan = false;
+        controls.autoRotateSpeed = 10;
     }
 
     const ambientLight = new THREE.AmbientLight(0xffffff, 0.3);
@@ -596,26 +597,72 @@ if (colorBtn) colorBtn.addEventListener('click', function() {
 // ============================================
 const contactForm = document.getElementById('contact-form');
 if (contactForm) {
-    contactForm.addEventListener('submit', function(e) {
+    contactForm.addEventListener('submit', async function(e) {
         e.preventDefault();
-        const formData = new FormData(this);
-        const data = Object.fromEntries(formData);
-        if (!data.name || !data.email || !data.subject || !data.message) {
-            alert('Por favor, completa todos los campos.');
+
+        const btn = this.querySelector('.btn-submit');
+        const status = document.getElementById('form-status');
+        const originalText = btn.innerHTML;
+
+        const name = this.querySelector('#name').value.trim();
+        const email = this.querySelector('#email').value.trim();
+        const subject = this.querySelector('#subject').value.trim();
+        const message = this.querySelector('#message').value.trim();
+
+        if (!name || !email || !subject || !message) {
+            status.textContent = 'Por favor, completa todos los campos.';
+            status.className = 'form-status error';
             return;
         }
-        const btn = this.querySelector('.btn-submit');
-        const originalText = btn.innerHTML;
+
+        var lastSubmit = localStorage.getItem('formSubmitTime');
+        if (lastSubmit && Date.now() - lastSubmit < 30000) {
+            status.textContent = 'Espera 30 segundos antes de enviar otro mensaje.';
+            status.className = 'form-status error';
+            return;
+        }
+
+        var sanitize = function(str) { return str.replace(/[<>&"']/g, ''); };
+
         btn.innerHTML = '<span>Enviando...</span><i class="fas fa-spinner fa-spin"></i>';
         btn.disabled = true;
+        status.className = 'form-status';
+
+        try {
+            var response = await fetch('https://api.web3forms.com/submit', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    access_key: 'TU_ACCESS_KEY_AQUI',
+                    name: sanitize(name),
+                    email: sanitize(email),
+                    subject: sanitize(subject),
+                    message: sanitize(message),
+                    botcheck: this.querySelector('[name="botcheck"]').checked ? 'true' : ''
+                })
+            });
+
+            var result = await response.json();
+
+            if (result.success) {
+                btn.innerHTML = '<span>Enviado!</span><i class="fas fa-check"></i>';
+                status.textContent = 'Mensaje enviado correctamente. Te responderé pronto.';
+                status.className = 'form-status success';
+                contactForm.reset();
+                localStorage.setItem('formSubmitTime', Date.now());
+            } else {
+                throw new Error('Error del servidor');
+            }
+        } catch (error) {
+            btn.innerHTML = '<span>Error</span><i class="fas fa-times"></i>';
+            status.textContent = 'Hubo un error. Intenta de nuevo o contáctame por email.';
+            status.className = 'form-status error';
+        }
+
         setTimeout(function() {
-            btn.innerHTML = '<span>Mensaje Enviado!</span><i class="fas fa-check"></i>';
-            contactForm.reset();
-            setTimeout(function() {
-                btn.innerHTML = originalText;
-                btn.disabled = false;
-            }, 2000);
-        }, 1500);
+            btn.innerHTML = originalText;
+            btn.disabled = false;
+        }, 3000);
     });
 }
 

@@ -136,7 +136,7 @@
                                 <div class="about-image">
                                     <div class="image-frame">
                                         <div class="image-placeholder">
-                                            <i class="fas fa-user"></i>
+                                            <img src="./src/sobre_mi.jpg" alt="">
                                         </div>
                                     </div>
                                 </div>
@@ -158,7 +158,7 @@
                                             <span class="stat-label">Carreras</span>
                                         </div>
                                         <div class="stat-item">
-                                            <span class="stat-number">5+</span>
+                                            <span class="stat-number">4</span> <!--Numero de certificados -->
                                             <span class="stat-label">Certificaciones</span>
                                         </div>
                                     </div>
@@ -328,16 +328,16 @@
                                 <h2 class="section-title">Proyectos</h2>
                                 <div class="section-line"></div>
                             </div>
-                            <div class="projects-filter">
+                            <!-- <div class="projects-filter">
                                 <button class="filter-btn active" data-filter="all">Todos</button>
                                 <button class="filter-btn" data-filter="design">Diseño</button>
                                 <button class="filter-btn" data-filter="dev">Desarrollo</button>
-                            </div>
+                            </div> -->
                             <div class="projects-grid">
-                                <div class="project-card" data-category="dev" data-live="https://frontend-bkzbh1x5j-carlosnicola39-8386s-projects.vercel.app/#acerca" data-behance="" data-long-desc="Dashboard de mantenimiento prescriptivo industrial simulado en el navegador. Monitorea telemetría en tiempo real (temperatura, vibración y corriente) para 50 motores, detecta anomalías críticas y genera órdenes de trabajo estandarizadas Lockout/Tagout (LOTO) con diagnóstico de causa raíz y cálculo de piezas.">
+                                <div class="project-card" data-category="dev" data-live="https://frontend-zeta-brown-8gqrwl4cgw.vercel.app" data-behance="" data-long-desc="Dashboard de mantenimiento prescriptivo industrial simulado en el navegador. Monitorea telemetría en tiempo real (temperatura, vibración y corriente) para 50 motores, detecta anomalías críticas y genera órdenes de trabajo estandarizadas Lockout/Tagout (LOTO) con diagnóstico de causa raíz y cálculo de piezas.">
                                     <div class="project-image">
                                         <div class="project-placeholder">
-                                            <i class="fas fa-code"></i>
+                                            <i class="fas fa-chart-line"></i>
                                         </div>
                                     </div>
                                     <div class="project-info">
@@ -352,10 +352,10 @@
                                     </div>
                                 </div>
 
-                                <div class="project-card" data-category="dev" data-live="" data-behance="https://www.behance.net/carlos-nicola" data-long-desc="Dashboard de monitoreo climático desarrollado para hackathon a partir de datasets satelitales abiertos (Sentinel-2, Landsat, MODIS). El proyecto abarcó el análisis exploratorio de datos, el diseño y prototipado de la interfaz en Figma Make, y su desarrollo completo en React 18 con TypeScript y Tailwind CSS. Cuenta con comparador split-screen interactivo, series de tiempo (2010–2026), gráficas de correlación con Recharts y arquitectura modular optimizada con pruebas automatizadas en Vitest.">
+                                <div class="project-card" data-category="dev" data-live="https://sienna-fond-82379322.figma.site" data-behance="" data-long-desc="Dashboard de monitoreo climático desarrollado para hackathon a partir de datasets satelitales abiertos (Sentinel-2, Landsat, MODIS). El proyecto abarcó el análisis exploratorio de datos, el diseño y prototipado de la interfaz en Figma Make, y su desarrollo completo en React 18 con TypeScript y Tailwind CSS. Cuenta con comparador split-screen interactivo, series de tiempo (2010–2026), gráficas de correlación con Recharts y arquitectura modular optimizada con pruebas automatizadas en Vitest.">
                                     <div class="project-image">
                                         <div class="project-placeholder">
-                                            <i class="fas fa-anchor"></i>
+                                            <i class="fas fa-chart-line"></i>
                                         </div>
                                     </div>
                                     <div class="project-info">
@@ -370,38 +370,24 @@
                                     </div>
                                 </div>
 
-                                <div class="project-card" data-category="dev design" data-live="" data-behance="https://www.behance.net/carlos-nicola" data-long-desc="Aplicación móvil de comercio electrónico con catálogo de productos, carrito de compras y pasarela de pagos. Desarrollada con React Native y backend en Node.js.">
+                                <div class="project-card" data-category="dev design" data-live="https://carjobs.vercel.app" data-behance="" data-long-desc="Single Page Application (SPA) para la búsqueda y gestión de empleos en el sector tecnológico desarrollada con React 19 y Vite. Consume una API REST externa con paginación integrada y un sistema de filtrado multicriterio sincronizado bidireccionalmente con los SearchParams de la URL. Incorpora gestión de estado global ligero con Zustand para autenticación simulada y persistencia de ofertas favoritas en localStorage, renderizado dinámico de descripciones en Markdown (snarkdown) y carga diferida de rutas (React.lazy + Suspense) para un rendimiento óptimo.">
                                     <div class="project-image">
                                         <div class="project-placeholder">
-                                            <i class="fas fa-mobile-alt"></i>
+                                            <i class="fas fa-code"></i>
                                         </div>
                                     </div>
                                     <div class="project-info">
-                                        <h3>App E-commerce</h3>
-                                        <p>Aplicación móvil de comercio electrónico.</p>
+                                        <h3>CarJobs</h3>
+                                        <p>Plataforma de búsqueda de empleos tech con filtros avanzados, favoritos en localStorage y consumo de API REST.</p>
                                         <div class="project-tags">
-                                            <span>React Native</span>
-                                            <span>Node.js</span>
+                                            <span>React</span>
+                                            <span>Zustand</span>
+                                            <span>API REST</span>
+                                            <span>Vite</span>
                                         </div>
                                     </div>
                                 </div>
 
-                                <div class="project-card" data-category="dev" data-live="" data-behance="https://www.behance.net/carlos-nicola" data-long-desc="Panel de control interactivo con visualización de datos en tiempo real con gráficos dinámicos. Desarrollado con React, D3.js para visualización y SQL para manejo de datos.">
-                                    <div class="project-image">
-                                        <div class="project-placeholder">
-                                            <i class="fas fa-chart-line"></i>
-                                        </div>
-                                    </div>
-                                    <div class="project-info">
-                                        <h3>Dashboard Analytics</h3>
-                                        <p>Panel de control interactivo con visualización de datos.</p>
-                                        <div class="project-tags">
-                                            <span>React</span>
-                                            <span>D3.js</span>
-                                            <span>SQL</span>
-                                        </div>
-                                    </div>
-                                </div>
                             </div>
                         </div>
                     </section>
@@ -494,27 +480,30 @@
                                         </div>
                                     </div>
                                 </div>
-                                <form class="contact-form" id="contact-form">
+                                <form class="contact-form" id="contact-form" action="https://api.web3forms.com/submit" method="POST">
+                                    <input type="hidden" name="access_key" value="TU_ACCESS_KEY_AQUI">
+                                    <input type="checkbox" name="botcheck" class="hidden" style="display: none;">
                                     <div class="form-group">
-                                        <input type="text" id="name" name="name" required>
+                                        <input type="text" id="name" name="name" required maxlength="100">
                                         <label for="name">Nombre</label>
                                     </div>
                                     <div class="form-group">
-                                        <input type="email" id="email" name="email" required>
+                                        <input type="email" id="email" name="email" required maxlength="150">
                                         <label for="email">Email</label>
                                     </div>
                                     <div class="form-group">
-                                        <input type="text" id="subject" name="subject" required>
+                                        <input type="text" id="subject" name="subject" required maxlength="200">
                                         <label for="subject">Asunto</label>
                                     </div>
                                     <div class="form-group">
-                                        <textarea id="message" name="message" rows="4" required></textarea>
+                                        <textarea id="message" name="message" rows="4" required maxlength="2000"></textarea>
                                         <label for="message">Mensaje</label>
                                     </div>
                                     <button type="submit" class="btn btn-primary btn-submit">
                                         <span>Enviar Mensaje</span>
                                         <i class="fas fa-paper-plane"></i>
                                     </button>
+                                    <div class="form-status" id="form-status"></div>
                                 </form>
                             </div>
                         </div>
